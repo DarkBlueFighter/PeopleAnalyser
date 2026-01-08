@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">人流分析系統</string>
+    <string name="copied_message">已複製訊息</string>
+</resources>

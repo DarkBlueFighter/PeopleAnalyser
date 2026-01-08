@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#1E1E1E"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#2D2D2D"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tapo C210 人流量分析系統"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="設定"
+            android:backgroundTint="#4CAF50" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:background="#000000"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="攝影機畫面"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <FrameLayout
+                android:id="@+id/streamContainer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#000000">
+
+                <androidx.media3.ui.PlayerView
+                    android:id="@+id/openGlView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <!-- USB 摄影机预览 SurfaceView（預設隱藏） -->
+                <SurfaceView
+                    android:id="@+id/usbCameraView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvStreamStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="等待連接..."
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:visibility="visible" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/etRTSPUrl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="RTSP URL"
+                    android:text="rtsp://admin:admin@192.168.1.100:554/stream1"
+                    android:textColor="#FFFFFF"
+                    android:padding="12dp"
+                    android:background="#333333" />
+
+                <Button
+                    android:id="@+id/btnConnect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="連接"
+                    android:layout_marginStart="8dp"
+                    android:paddingHorizontal="24dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="或"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginHorizontal="8dp"/>
+
+                <Button
+                    android:id="@+id/btnConnectUsb"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="連接USB攝影機"
+                    android:backgroundTint="#2196F3"
+                    android:paddingHorizontal="16dp" />
+
+                <!-- 新增模擬影格按鈕 -->
+                <Button
+                    android:id="@+id/btnSimulateFrame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="模擬影格"
+                    android:backgroundTint="#9C27B0"
+                    android:paddingHorizontal="12dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="#2D2D2D"
+            android:padding="16dp"
+            android:layout_marginStart="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分析控制面板"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:id="@+id/tvAnalysisStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="狀態：未啟動"
+                android:textColor="#FF9800"
+                android:textSize="16sp"
+                android:layout_marginBottom="24dp"/>
+
+            <Button
+                android:id="@+id/btnStartAnalysis"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="開始人流量分析"
+                android:textSize="18sp"
+                android:backgroundTint="#4CAF50"
+                android:layout_marginBottom="8dp"
+                android:enabled="false"/>
+
+            <Button
+                android:id="@+id/btnStopAnalysis"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="停止分析"
+                android:textSize="18sp"
+                android:backgroundTint="#F44336"
+                android:layout_marginBottom="24dp"
+                android:enabled="false"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="即時統計"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#3D3D3D"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/tvPeopleCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="偵測人數：0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvGenderStats"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="性別比例：男 0% | 女 0%"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvAgeStats"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="平均年齡：-"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvDwellTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="平均駐足：- 秒"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="今日統計"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/tvDailyStats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="總人數：0\n高峰時段：無"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:background="#3D3D3D"
+                android:padding="12dp"
+                android:lineSpacingExtra="4dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#2D2D2D"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tvConnectionStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="未連接"
+            android:textColor="#F44336"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvLastUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最後更新：--:--:--"
+            android:textColor="#B3B3B3"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <!-- Small status overlay: non-intrusive box shown on top-right / bottom-right -->
+    <FrameLayout
+        android:id="@+id/statusOverlayWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Invisible container occupying full screen but overlay content aligned to bottom-end -->
+        <LinearLayout
+            android:id="@+id/statusOverlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="12dp"
+            android:padding="8dp"
+            android:background="@drawable/status_overlay_bg"
+            android:elevation="6dp">
+
+            <TextView
+                android:id="@+id/tvSmallConnection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Conn: -"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvSmallUsb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="USB: 未偵測"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvSmallPeople"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="People: 0"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Azure 設定"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etAzureKey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Azure subscription key"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/etAzureEndpoint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Azure endpoint (e.g. https://{region}.api.cognitive.microsoft.com/)"
+            android:inputType="textUri" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上傳設定 (可選)"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etServerUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Server upload URL"
+            android:inputType="textUri" />
+
+        <EditText
+            android:id="@+id/etStoreId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Store ID"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/btnSaveSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="儲存設定"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>

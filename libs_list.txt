@@ -1,0 +1,10 @@
+﻿
+
+    目錄: C:\Users\roger\AndroidStudioProjects\PeopleAnalyser\app\libs
+
+
+Mode                 LastWriteTime         Length Name                                                                                                                                                                                                                           
+----                 -------------         ------ ----                                                                                                                                                                                                                           
+-a----          2026/1/8  上午 12:39           1556 README.md                                                                                                                                                                                                                      
+
+

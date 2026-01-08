@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 允許所有USB設備，您可以根據供應商ID與產品ID過濾 -->
+    <usb-device />
+</resources>
+

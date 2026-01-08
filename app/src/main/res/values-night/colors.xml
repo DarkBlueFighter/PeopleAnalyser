@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Night mode overrides for status overlay colors -->
+    <color name="status_overlay_bg">#CC000000</color>
+    <color name="status_overlay_border">#22FFFFFF</color>
+</resources>
+
