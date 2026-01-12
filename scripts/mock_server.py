@@ -129,7 +129,11 @@ class MockFaceAPIHandler(BaseHTTPRequestHandler):
 
 
 def run_server(port=8000):
-    """啟動 Mock Server"""
+    """啟動 Mock Server
+    
+    注意：此 Mock Server 僅供開發測試使用，監聽 0.0.0.0 代表接受所有網路介面的連線。
+    在生產環境中，應該使用正式的 API Server 並設定適當的安全性措施。
+    """
     server_address = ('0.0.0.0', port)
     httpd = HTTPServer(server_address, MockFaceAPIHandler)
     

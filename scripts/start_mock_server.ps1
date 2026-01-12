@@ -14,7 +14,9 @@ Write-Host ""
 # 檢查 Python 是否可用
 Write-Host "檢查 Python..." -ForegroundColor Yellow
 try {
-    $pythonVersion = python --version 2>&1
+    # 優先嘗試 python3，如果不存在則使用 python
+    $pythonCmd = if (Get-Command python3 -ErrorAction SilentlyContinue) { "python3" } else { "python" }
+    $pythonVersion = & $pythonCmd --version 2>&1
     Write-Host "  ✓ Python 已安裝: $pythonVersion" -ForegroundColor Green
 } catch {
     Write-Host "  ✗ 找不到 Python" -ForegroundColor Red
@@ -59,7 +61,7 @@ Write-Host ""
 
 # 啟動 Mock Server
 try {
-    python $scriptPath $Port
+    & $pythonCmd $scriptPath $Port
 } catch {
     Write-Host ""
     Write-Host "Mock Server 啟動失敗: $_" -ForegroundColor Red
