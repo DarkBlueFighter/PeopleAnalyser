@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 
+        網路安全設定
+        允許 cleartext (HTTP) 連線以便在開發/測試環境中使用 Mock Server
+    -->
+    
+    <!-- 預設設定：允許所有 cleartext 連線（開發用） -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <!-- 信任系統預設的 CA 憑證 -->
+            <certificates src="system" />
+            <!-- 信任使用者安裝的 CA 憑證（用於除錯） -->
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+    
+    <!-- 針對本機測試的特定網域設定 -->
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- localhost -->
+        <domain includeSubdomains="false">localhost</domain>
+        <domain includeSubdomains="false">127.0.0.1</domain>
+        
+        <!-- Android 模擬器的主機 IP -->
+        <domain includeSubdomains="false">10.0.2.2</domain>
+        
+        <!-- 其他可能的本機 IP 範圍 -->
+        <domain includeSubdomains="false">192.168.0.1</domain>
+        <domain includeSubdomains="false">192.168.1.1</domain>
+        <domain includeSubdomains="false">10.0.0.1</domain>
+    </domain-config>
+    
+    <!-- 
+        生產環境注意事項：
+        在發布正式版本時，應該要：
+        1. 將 base-config 的 cleartextTrafficPermitted 改為 false
+        2. 只保留必要的 domain-config
+        3. 確保所有生產環境 API 都使用 HTTPS
+        
+        範例（生產環境設定）：
+        <base-config cleartextTrafficPermitted="false" />
+        <domain-config cleartextTrafficPermitted="true">
+            <domain includeSubdomains="false">10.0.2.2</domain>
+        </domain-config>
+    -->
+</network-security-config>

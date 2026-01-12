@@ -5,14 +5,47 @@ PeopleAnalyser - USB 攝影機與 RTSP 人流分析
 - USB 攝影機偵測與預覽（UVCCamera 支援）
 - 基本影格處理範例（YUV -> Bitmap, 亮度計算, 簡易運動偵測）
 - 前台服務範例（FaceAnalysisService）
+- **Mock Server 支援**：本機測試時可使用 Mock Face API Server
+
+## 📱 在 BlueStacks 模擬器中測試
+
+如果您要在 BlueStacks 模擬器中測試 App，請參考 **[BlueStacks 設定指南](BLUESTACKS_SETUP.md)**，其中包含：
+- 如何啟動 Mock Server
+- 如何讓模擬器連接到本機 Mock Server
+- 連線問題排查指南
+- ADB 設定說明
+
+### 快速開始（BlueStacks 測試）
+
+1. **啟動 Mock Server**：
+   ```powershell
+   .\scripts\start_mock_server.ps1
+   ```
+
+2. **在 BlueStacks 瀏覽器中測試連線**：
+   - 開啟 BlueStacks 內建瀏覽器
+   - 前往 `http://10.0.2.2:8000/`
+   - 應該會看到 Mock Server 的回應
+
+3. **在 App 設定中使用 Mock Server**：
+   - Azure 端點設定為：`http://10.0.2.2:8000`
+
+詳細說明請見：[BLUESTACKS_SETUP.md](BLUESTACKS_SETUP.md)
+
+---
+
+## 🛠️ 專案修改摘要
 
 我已在專案中做的修改摘要：
 - 修正並清理 `AndroidManifest.xml`，新增 USB `device_filter.xml`（res/xml/device_filter.xml）
+- 新增 `network_security_config.xml`：允許 cleartext (HTTP) 連線用於開發測試
 - 新增/更新 `UsbCameraManager.kt`：使用 UVCCamera + USBMonitor（若系統/相依正確，會自動監聽 USB attach/detach、處理權限並開啟 camera / startPreview）
 - 更新 `MainActivity.kt`：新增 USB preview 的 `SurfaceView`（`R.id.usbCameraView`）、按鈕 `btnConnectUsb` 行為、frame callback 處理（把 ByteBuffer 轉 byte[]，交給 `UsbFrameProcessor` 處理）、相機權限檢查
 - 修正 `UsbFrameProcessor.kt` 的語法錯誤（並保留若干轉換/處理輔助方法）
 
-重要：本地建置（CI 運行）需求
+---
+
+## ⚙️ 本地建置需求
 - 您的開發環境必須有 JDK 並正確設定 `JAVA_HOME`（Gradle 需要）
 
 在 Windows PowerShell 設置 JAVA_HOME（範例，請依照實際 JDK 路徑修改）：
@@ -132,3 +165,37 @@ git push -u origin main
 ```
 
 注意：此腳本需要在有 Java/JDK 並可使用 `java -version` 的環境下執行；腳本會檢查 `gradlew.bat` 是否存在。
+
+---
+
+## 🔧 測試與診斷工具
+
+### Mock Server 相關工具
+
+- **啟動 Mock Server**：`.\scripts\start_mock_server.ps1`
+  - 快速啟動本機測試用的 Mock Face API Server
+  - 預設監聽 port 8000，可從 BlueStacks 透過 `10.0.2.2:8000` 存取
+
+- **連線診斷工具**：`.\scripts\diagnose_connection.ps1`
+  - 自動診斷 BlueStacks 與本機 Mock Server 的連線問題
+  - 檢查項目包括：
+    - Mock Server 是否執行
+    - 本機連線測試
+    - ADB 連接狀態
+    - adb reverse 設定
+    - Windows 防火牆狀態
+  - 使用方式：
+    ```powershell
+    .\scripts\diagnose_connection.ps1
+    # 或指定 ADB 路徑
+    .\scripts\diagnose_connection.ps1 -AdbPath "C:\platform-tools\adb.exe"
+    ```
+
+### Mock Server API 端點
+
+- `GET /` - 測試用端點，回傳 server 狀態
+- `POST /face/v1.0/detect` - 模擬 Azure Face API，回傳 Mock 人臉資料
+
+詳細 API 文檔請見：[BLUESTACKS_SETUP.md](BLUESTACKS_SETUP.md)
+
+---
